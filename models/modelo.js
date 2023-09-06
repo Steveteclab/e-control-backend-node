@@ -19,7 +19,7 @@ module.exports = {
       
       // Insertar el usuario con la contraseña hasheada en la base de datos
       const [result] = await connection.execute(
-        'INSERT INTO Usuarios (nombre_usuario, contrasena_hash, contrasena_salt, id_rol) VALUES (?, ?, ?, ?)',
+        'INSERT INTO TB_USUARIOS_JWT (nombre_usuario, contrasena_hash, contrasena_salt, id_rol) VALUES (?, ?, ?, ?)',
         [usuarioData.nombre_usuario, hashedPassword, salt, usuarioData.id_rol]
       );
       

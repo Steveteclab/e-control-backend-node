@@ -10,7 +10,7 @@ const login = async (req, res) => {
 
   try {
     // Realiza una consulta a la base de datos para encontrar al usuario por nombre de usuario
-    const query = 'SELECT * FROM Usuarios WHERE nombre_usuario = ?';
+    const query = 'SELECT * FROM TB_USUARIOS_JWT WHERE nombre_usuario = ?';
     const [results] = await pool.query(query, [username]);
 
     if (results.length > 0) {
