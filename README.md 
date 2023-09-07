@@ -6,7 +6,7 @@ Descripción concisa y descriptiva del proyecto.
 
 1. Clona el repositorio: `git clone https://github.com/Steveteclab/impulsadoras-backend.git
 2. Navega al directorio del proyecto: `cd name-proyecto`
-3. Instala las dependencias: `npm install`
+3. Instala las dependencias: `npm install`.
 
 ## Configuración
 
