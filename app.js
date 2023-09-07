@@ -3,17 +3,23 @@ const express = require('express');
 const app = express();
 const cors = require('cors'); // Importa el paquete cors
 
-// Configura CORS para permitir todas las solicitudes (esto es un ejemplo, en producción, debes configurarlo de manera más segura)
+// Configuración de CORS
 app.use(cors());
-
-// Importa las rutas de la aplicación
-const routes = require('./routes/routes');
 
 // Middleware para analizar el cuerpo de las solicitudes como JSON
 app.use(express.json());
 
-// Conecta las rutas a la aplicación
+// Importa las rutas de la aplicación
+const routes = require('./routes/routes');
+
+// Importa el controlador para capturar la página web como PDF
+const pdfCaptureController = require('./controllers/pdfCaptureController');
+
+// Rutas
 app.use('/api', routes);
+
+// Ruta para capturar la página web como PDF
+app.post('/capture-pdf', pdfCaptureController);
 
 // Define el puerto en el que se ejecutará el servidor
 const PORT = process.env.PORT || 3001;
