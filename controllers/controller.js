@@ -8,16 +8,21 @@ const controller = {
     try {
       // Obtiene los datos del usuario desde el cuerpo de la solicitud
       const usuarioData = req.body;
-      
+  
+      // Verificar que los campos obligatorios estén presentes en el objeto de usuarioData
+      if (!usuarioData.nombre || !usuarioData.primer_apellido || !usuarioData.telefono || !usuarioData.correo_electronico || !usuarioData.nombre_usuario || !usuarioData.contrasena || !usuarioData.id_rol) {
+        return res.status(400).json({ status: 'error', message: 'Todos los campos son obligatorios' });
+      }
+  
       // Llama a la función insertUsuario del modelo para realizar la inserción
       const result = await modelo.insertUsuario(usuarioData);
-      
+  
       // Envía la respuesta con el resultado de la inserción
-      res.json(result);
+      res.json({ status: 'success', message: 'Usuario insertado exitosamente', data: result });
     } catch (error) {
       console.error(error);
       // Envía una respuesta de error en caso de fallo en la inserción
-      res.status(500).send('Error al insertar el usuario');
+      res.status(500).json({ status: 'error', message: 'Error al insertar el usuario' });
     }
   },
 
@@ -28,15 +33,15 @@ const controller = {
       const id = req.params.id;
   
       // Llama a la función selectUsuario del modelo para obtener la información
-      const tracking = await modelo.selectUsuario(id);
+      const result = await modelo.selectUsuario(id);
   
       // Verifica si el resultado está vacío
-      if (tracking.length === 0) {
+      if (result.length === 0) {
         return res.status(404).json({ msg: 'Usuario no encontrado' });
       }
   
       // Envía la respuesta con la información de los usuarios
-      res.json(tracking);
+      res.json({ status: 'success', message: 'Usuario Encontrado exitosamente', data: result });
     } catch (error) {
       console.error(error);
       // Envía una respuesta de error en caso de fallo al obtener la información
@@ -57,7 +62,7 @@ const controller = {
       const result = await modelo.updateUsuario(id, telefono, correo_electronico);
       
       // Envía la respuesta con el resultado de la actualización
-      res.json(result);
+      res.json({ status: 'success', message: 'Usuario Actualizado exitosamente', data: result });
     } catch (error) {
       console.error(error);
       // Envía una respuesta de error en caso de fallo en la actualización
@@ -75,7 +80,7 @@ const controller = {
       const result = await modelo.deleteUsuario(id);
       
       // Envía la respuesta con el resultado de la eliminación
-      res.json(result);
+      res.json({ status: 'success', message: 'Usuario Eliminado exitosamente', data: result });
     } catch (error) {
       console.error(error);
       // Envía una respuesta de error en caso de fallo en la eliminación
