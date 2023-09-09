@@ -22,14 +22,19 @@ const controller = {
   },
 
   // Obtiene información de usuarios de la base de datos
-  selectTracking: async (req, res) => {
+  selectUsuario: async (req, res) => {
     try {
       // Obtiene el ID del usuario desde los parámetros de la solicitud
       const id = req.params.id;
-      
-      // Llama a la función selectTracking del modelo para obtener la información
-      const tracking = await modelo.selectTracking(id);
-      
+  
+      // Llama a la función selectUsuario del modelo para obtener la información
+      const tracking = await modelo.selectUsuario(id);
+  
+      // Verifica si el resultado está vacío
+      if (tracking.length === 0) {
+        return res.status(404).json({ msg: 'Usuario no encontrado' });
+      }
+  
       // Envía la respuesta con la información de los usuarios
       res.json(tracking);
     } catch (error) {
@@ -45,10 +50,11 @@ const controller = {
       // Obtiene el ID del usuario desde los parámetros de la solicitud
       const id = req.params.id;
       // Obtiene el nuevo número de teléfono desde el cuerpo de la solicitud
-      const nuevoTelefono = req.body.telefono;
+      const telefono = req.body.telefono;
+      const correo_electronico = req.body.correo_electronico;
       
       // Llama a la función updateUsuario del modelo para realizar la actualización
-      const result = await modelo.updateUsuario(id, nuevoTelefono);
+      const result = await modelo.updateUsuario(id, telefono, correo_electronico);
       
       // Envía la respuesta con el resultado de la actualización
       res.json(result);

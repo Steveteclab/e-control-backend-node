@@ -22,7 +22,7 @@ router.post('/usuarios', authMiddleware, usuarioController.insertUsuario);
 
 // Obtener información de un usuario por su ID
 // GET /api/tracking/:id
-router.get('/tracking/:id', authMiddleware, usuarioController.selectTracking);
+router.get('/usuarios/:id', authMiddleware, usuarioController.selectUsuario);
 
 // Actualizar información de un usuario por su ID
 // PUT /api/usuarios/:id

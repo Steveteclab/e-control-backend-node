@@ -19,8 +19,8 @@ module.exports = {
       
       // Insertar el usuario con la contraseña hasheada en la base de datos
       const [result] = await connection.execute(
-        'INSERT INTO TB_USUARIOS_JWT (nombre_usuario, contrasena_hash, contrasena_salt, id_rol) VALUES (?, ?, ?, ?)',
-        [usuarioData.nombre_usuario, hashedPassword, salt, usuarioData.id_rol]
+        'INSERT INTO TB_USUARIOS_JWT (nombre, primer_apellido, segundo_apellido, telefono, correo_electronico, nombre_usuario, contrasena_hash, contrasena_salt, id_rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [usuarioData.nombre, usuarioData.primer_apellido, usuarioData.segundo_apellido, usuarioData.telefono, usuarioData.correo_electronico, usuarioData.nombre_usuario, hashedPassword, salt, usuarioData.id_rol]
       );
       
       connection.release();
@@ -32,19 +32,19 @@ module.exports = {
   },
 
   // Obtener información de usuarios por su ID
-  selectTracking: async (id) => {
+  selectUsuario: async (id) => {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query('SELECT ESTADO FROM TB_TRACKING WHERE CODE_BAR = ?', [id]);
+    const [rows] = await connection.query('SELECT * FROM TB_USUARIOS_JWT WHERE id = ?', [id]);
     connection.release();
     return rows;
   },
 
   // Actualizar el teléfono de un usuario por su ID
-  updateUsuario: async (id, nuevoTelefono) => {
+  updateUsuario: async (id, telefono, correo_electronico) => {
     const connection = await pool.getConnection();
     const [result] = await connection.execute(
-      'UPDATE usuarios SET telefono = ? WHERE id = ?',
-      [nuevoTelefono, id]
+      'UPDATE TB_USUARIOS_JWT SET telefono = ?, correo_electronico = ? WHERE id = ?',
+      [telefono, correo_electronico, id]
     );
     connection.release();
     return result;
@@ -53,7 +53,7 @@ module.exports = {
   // Eliminar un usuario por su ID
   deleteUsuario: async (id) => {
     const connection = await pool.getConnection();
-    const [result] = await connection.execute('DELETE FROM usuarios WHERE id = ?', [id]);
+    const [result] = await connection.execute('DELETE FROM TB_USUARIOS_JWT WHERE id = ?', [id]);
     connection.release();
     return result;
   },
