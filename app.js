@@ -1,5 +1,6 @@
 // Importa el módulo Express para crear y configurar el servidor
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const app = express();
 const cors = require('cors'); // Importa el paquete cors
 
@@ -15,8 +16,16 @@ const routes = require('./routes/routes');
 // Importa el controlador para capturar la página web como PDF
 const pdfCaptureController = require('./controllers/pdfCaptureController');
 
+// Configura el middleware de limitación de velocidad
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 10000, // número máximo de solicitudes por ventana
+  message: 'Has excedido el límite de velocidad de solicitudes.', // mensaje de respuesta personalizado
+});
+
 // Rutas
-app.use('/api', routes);
+// Aplica el middleware de limitación de velocidad a todas las rutas que desees proteger
+app.use('/api', limiter, routes);
 
 // Ruta para capturar la página web como PDF
 app.post('/capture-pdf', pdfCaptureController);
