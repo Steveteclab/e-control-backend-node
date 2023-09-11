@@ -60,13 +60,18 @@ const controller = {
       
       // Llama a la función updateUsuario del modelo para realizar la actualización
       const result = await modelo.updateUsuario(id, telefono, correo_electronico);
-      
+  
+      // Verificar si la actualización afectó a algún registro en la base de datos
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ status: 'error', message: 'Usuario no encontrado' });
+      }
+  
       // Envía la respuesta con el resultado de la actualización
       res.json({ status: 'success', message: 'Usuario Actualizado exitosamente', data: result });
     } catch (error) {
       console.error(error);
       // Envía una respuesta de error en caso de fallo en la actualización
-      res.status(500).send('Error al actualizar el usuario');
+      res.status(500).json({ status: 'error', message: 'Error al actualizar el usuario' });
     }
   },
 
