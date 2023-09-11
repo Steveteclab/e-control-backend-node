@@ -24,7 +24,7 @@ project-e-control-root/
   ├── routes/                # Definición de rutas
   │    └── routes.js
   ├── controllers/           # Lógica del controlador
-  │    ├── authController.js
+  │    ├── authController.js 
   │    └── usuarioController.js
   ├── models/                # Modelos de datos
   │    └── usuarioModel.js
@@ -38,6 +38,7 @@ project-e-control-root/
   ├── views/                 # Plantillas de vista (si se utiliza un motor de plantillas)
   ├── public/                # Recursos estáticos (CSS, JS, imágenes)
   ├── .env                   # Archivo de variables de entorno
+  ├── .gitignore             # Archivo que especifica patrones de archivos y directorios que deben ser ignorados por Git durante el seguimiento y la versión. 
   ├── package.json           # Archivo de configuración de npm
   ├── node_modules/          # Dependencias de npm (generado automáticamente)
   └── README.md              # Documentación del proyecto
